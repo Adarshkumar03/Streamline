@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     username: {
@@ -10,18 +10,12 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    journals: [{
+    projects: [{
         type:  Schema.Types.ObjectId,  //
-        ref: 'Journal'
+        ref: 'Project'
     }],
-    moods: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Mood'
-        }
-    ]
 });
 
 
 const User = mongoose.model( 'User', UserSchema );
-export default User;
+module.exports = User;

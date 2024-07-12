@@ -1,9 +1,9 @@
-import User from "../models/User";
-import passport from "passport";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+const User = require("../models/User.js");
+const passport = require("passport");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-exports.register_user = async (req, res, next) => {
+const register_user = async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const user = await User.findOne({ username });
@@ -16,8 +16,7 @@ exports.register_user = async (req, res, next) => {
     const newUser = new User({
       username,
       password: hashedPassword,
-      moods: [],
-      journals: [],
+      projects: [],
     });
     const savedUser = await newUser.save();
     const payload = { sub: savedUser._id };
@@ -28,7 +27,7 @@ exports.register_user = async (req, res, next) => {
   }
 };
 
-exports.login_user = (req, res, next) => {
+const login_user = (req, res, next) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
@@ -48,6 +47,10 @@ exports.login_user = (req, res, next) => {
   })(req, res);
 };
 
-exports.get_users_list = async (req, res, next) => {
+const get_users_list = async (req, res, next) => {
   return res.json({message: "User list"});
 };
+
+module.exports = {
+  register_user, get_users_list, login_user
+}

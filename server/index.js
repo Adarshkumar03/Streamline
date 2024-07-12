@@ -1,26 +1,26 @@
-import express, { json } from "express";
-import bodyParser from "body-parser";
-import passport from "passport";
-import cors from "cors";
-import "dotenv/config";
+const express = require('express');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const cors = require('cors');
+const dotenv = require("dotenv");
+dotenv.config();
 
 // Importing the routes
-import routes from "./routes";
-import { connectToDB } from "./utils/connectDB";
-import "./utils/passport";
+const routes = require('./routes/index');
+const connectToDB = require('./utils/connectDB');
+require('./utils/passport');
 
 const app = express();
 
-app.use(json());
+app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
 connectToDB();
 
-app.use("/v1/user", routes.user);
-app.use("/v1/mood", routes.mood);
-app.use("/v1/journal", routes.journal);
+app.use('/v1/user', routes.user);
+app.use('/v1/projects', routes.project);
 
 app.use((error, req, res, next) => {
   if (!error.statusCode) error.statusCode = 500;

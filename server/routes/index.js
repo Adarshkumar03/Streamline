@@ -1,7 +1,6 @@
-import mood from "./mood";
-import journal from "./journal";
-import user from "./user";
+const project =  require("./project");
+const user = require("./user");
 
-export default {
-  mood, journal, user
+module.exports = {
+  project, user
 };
